@@ -16,4 +16,5 @@ const store = useCounterStore()
 const { name, count, doubleCount } = storeToRefs(store)
 // the increment action can just be destructured
 const { increment } = store
+
 </script>

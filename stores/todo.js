@@ -1,15 +1,17 @@
 import {defineStore} from "pinia"
+// import { taskItem } from "@/models/taskItem.model"
 export const useTodoStore = defineStore("todoStore", {
   state: () => ({
-    todoList: [
-      {id: 1, name: 'test', complete: true},
-      {id: 2, name: 'test', complete: true},
-      {id: 3, name: 'test', complete: false},
-      {id: 4, name: 'test', complete: false},
-      {id: 5, name: 'test', complete: false},
-    ]
+    todoList: null
   }),
   actions: {
+    async fetchTasksList() {
+      const { data } = await useFetch('https://jsonplaceholder.typicode.com/todos');
+      if (data.value) {
+        console.log(data.value);
+        this.todoList = data.value;
+      }
+    },
     createTask(item) {
       this.todoList.push(item)
     },
@@ -17,10 +19,11 @@ export const useTodoStore = defineStore("todoStore", {
       this.todoList.splice(index, 1)
     },
     finishTask(value, index) {
-      this.todoList[index].complete = value
+      this.todoList[index].completed = value
     },
     saveTaskItemName(value, index) {
-      this.todoList[index].name = value
+      console.log(value)
+      this.todoList[index].title = value
     }
   },
   getters: {
