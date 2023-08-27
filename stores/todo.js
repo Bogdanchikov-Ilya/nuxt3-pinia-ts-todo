@@ -12,8 +12,12 @@ export const useTodoStore = defineStore("todoStore", {
         this.todoList = data.value;
       }
     },
-    createTask(item) {
-      this.todoList.push(item)
+    createTask(taskText) {
+      this.todoList.unshift({
+        id: Math.round(Math.random()),
+        title: taskText,
+        completed: false
+      })
     },
     deleteTaskItem(index) {
       this.todoList.splice(index, 1)

@@ -1,6 +1,6 @@
 <template>
   <div>
-    Some default layout shared across all pages
+    (Default) Лэйаут на всех страницах
     <slot />
   </div>
 </template> 

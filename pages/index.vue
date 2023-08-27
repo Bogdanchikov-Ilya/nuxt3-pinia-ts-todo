@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="index-wrapper">
    <h1>Welcome to the homepage</h1>
    <span>{{ doubleCount }}</span>
    <button type="button" @click="increment">click</button>
@@ -18,3 +18,8 @@ const { name, count, doubleCount } = storeToRefs(store)
 const { increment } = store
 
 </script>
+<style>
+.index-wrapper{
+  position: relative;
+}
+</style>
