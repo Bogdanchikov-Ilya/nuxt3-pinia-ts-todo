@@ -6,9 +6,9 @@
    <TodoList />
   </div>
 </template>
-<script setup>
+<script setup lang="ts">
 import { storeToRefs } from 'pinia'
-import {useCounterStore} from "~/stores/index.js";
+import {useCounterStore} from "~/stores/index.ts";
 const store = useCounterStore()
 // `name` and `doubleCount` are reactive refs
 // This will also extract refs for properties added by plugins

@@ -23,13 +23,16 @@
   </div>
 </div>
 </template>
-<script setup>
-import { useTodoStore } from '~/stores/todo.js'
+<script setup lang="ts">
+import { useTodoStore } from '~/stores/todo.ts'
 const todoStore = useTodoStore()
 
-const emit = defineEmits('closeModal')
-let taskText = ref('')
-const createTask = () => {
+const emit = defineEmits<{
+  (e: 'closeModal'): void
+}>()
+
+let taskText = ref<string>('')
+const createTask = ():void => {
   todoStore.createTask(taskText.value)
   taskText.value = ''
 }

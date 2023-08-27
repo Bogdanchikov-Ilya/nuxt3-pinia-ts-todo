@@ -11,26 +11,31 @@
     </div>
   </li>
 </template> 
-<script setup>
+<script setup lang="ts">
 // import { ref, nextTick } from 'vue'
-const props = defineProps({
-  name: String,
-  complete: Boolean,
-  id: Number
-})
-const emit = defineEmits(['deleteTaskItem', 'finishTask', 'saveTaskItemName'])
+const props = defineProps<{
+  name: string,
+  complete: boolean,
+  id: number
+}>()
+const emit = defineEmits<{
+  (e: 'deleteTaskItem'): void,
+  (e: 'finishTask', completed:boolean) :void,
+  (e: 'saveTaskItemName', name:string): void
+}>()
 
-const isEdit = ref(false)
+const isEdit = ref<boolean>(false)
 
-const input = ref(null)
+const input = ref<object>({})
 
 function deleteTaskItem() {
   emit('deleteTaskItem')
 }
-function changeChechbox(event) {
+function changeChechbox(event: any) {
+  console.log(typeof event)
   emit('finishTask', event.target.checked)
 }
-async function setEditTaskName(params) {
+async function setEditTaskName() {
   isEdit.value = true
   await nextTick()
   input.value.focus()

@@ -2,7 +2,7 @@
   <div class="p-5">
     <TodoCreateTaskModal v-if="isOpenCreateTaskModal" @closeModal="closeModal"/>
     <ul class="d-flex flex-column gap-3 p-0">
-      <todo-list-item v-for="(item, index) in tasksList" 
+      <todo-list-item v-for="(item, index) in getTodoList" 
       :key="item.id" 
       :id="item.id"
       :name="item.title" 
@@ -14,27 +14,30 @@
   <button class="btn btn-primary add-task" @click="openCreateTaskModal">Добавить задачу</button>
   </div>
 </template>
-<script setup>
-import { useTodoStore } from '~/stores/todo.js'
+<script setup lang="ts">
+import { storeToRefs } from 'pinia'
+import { useTodoStore } from '~/stores/todo.ts'
 const todoStore = useTodoStore()
-let isOpenCreateTaskModal = ref(false)
-const tasksList = computed(() => todoStore.todoList)
+const { getTodoList } = storeToRefs(todoStore)
+let isOpenCreateTaskModal = ref<boolean>(false)
+// одно и тоже что и getters
+// const tasksList = computed(() => todoStore.todoList)
 const { fetchTasksList } = todoStore
 await fetchTasksList()
 
-const closeModal = () => {
+const closeModal = ():void => {
   isOpenCreateTaskModal.value = false
 }
-const openCreateTaskModal = () => {
+const openCreateTaskModal = ():void => {
   isOpenCreateTaskModal.value = true
 }
-const deleteTaskItem = (index) => {
+const deleteTaskItem = (index:number):void => {
   todoStore.deleteTaskItem(index)
 }
-const finishTask = (value, index) => {
+const finishTask = (value:string, index:number):void => {
   todoStore.finishTask(value, index)
 }
-const saveTaskItemName = (value, index) => {
+const saveTaskItemName = (value:string, index:number):void => {
   todoStore.saveTaskItemName(value, index)
 }
 
@@ -43,6 +46,6 @@ const saveTaskItemName = (value, index) => {
 .add-task{
   position: fixed;
   bottom: 2rem;
-  left: calc(50% - 3rem)
+  left: 50%
 }
 </style>
