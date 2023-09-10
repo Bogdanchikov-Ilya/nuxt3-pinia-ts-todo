@@ -17,6 +17,7 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
 import { useTodoStore } from '~/stores/todo.ts'
+import { validateTask } from '@/services/tasksService'
 const todoStore = useTodoStore()
 const { getTodoList } = storeToRefs(todoStore)
 let isOpenCreateTaskModal = ref<boolean>(false)
@@ -34,12 +35,14 @@ const openCreateTaskModal = ():void => {
 const deleteTaskItem = (index:number):void => {
   todoStore.deleteTaskItem(index)
 }
-const finishTask = (value:string, index:number):void => {
+const finishTask = (value:boolean, index:number):void => {
   todoStore.finishTask(value, index)
 }
 const saveTaskItemName = (value:string, index:number):void => {
   todoStore.saveTaskItemName(value, index)
 }
+
+console.log(validateTask({title: null}), '2222')
 
 </script>
 <style>

@@ -1,16 +1,17 @@
 import {defineStore} from "pinia"
 import { TaskItem } from "@/models/taskItem.model"
+import {useMainApi} from "~/composables/useMainApi";
 
 export type RootState = {
   todoList: TaskItem[];
 }
 export const useTodoStore = defineStore("todoStore", {
   state: () => ({
-    todoList: [] 
+    todoList: []
   } as RootState),
   actions: {
     async fetchTasksList(): Promise<void> {
-      const { data } = await useFetch<TaskItem[]>('https://jsonplaceholder.typicode.com/todos');
+      const { data } = await useMainApi<TaskItem[]>('api/task');
       if (data.value) {
         this.todoList = data.value;
       }
