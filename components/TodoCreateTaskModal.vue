@@ -24,8 +24,8 @@
 </div>
 </template>
 <script setup lang="ts">
-import { useTodoStore } from '~/stores/todo.ts'
-const todoStore = useTodoStore()
+// import { useTodoStore } from '~/stores/todo.ts'
+// const todoStore = useTodoStore()
 
 const emit = defineEmits<{
   (e: 'closeModal'): void

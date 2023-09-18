@@ -2,7 +2,7 @@
   <div class="p-5">
     <TodoCreateTaskModal v-if="isOpenCreateTaskModal" @closeModal="closeModal"/>
     <ul class="d-flex flex-column gap-3 p-0">
-      <todo-list-item v-for="(item, index) in getTodoList" 
+      <todo-list-item v-for="(item, index) in tasksList"
       :key="item.id" 
       :id="item.id"
       :name="item.title" 
@@ -15,16 +15,21 @@
   </div>
 </template>
 <script setup lang="ts">
+// import * as taskService from '@/services/tasksService'
 import { storeToRefs } from 'pinia'
-import { useTodoStore } from '~/stores/todo.ts'
-import { validateTask } from '@/services/tasksService'
-const todoStore = useTodoStore()
-const { getTodoList } = storeToRefs(todoStore)
+// import { useTodoStore } from '~/stores/todo.ts'
+import * as taskService from '@/services/tasksService'
+import {TaskItem} from "~/models/taskItem.model";
+// const todoStore = useTodoStore()
+// const { getTodoList } = storeToRefs(todoStore)
 let isOpenCreateTaskModal = ref<boolean>(false)
 // одно и тоже что и getters
 // const tasksList = computed(() => todoStore.todoList)
-const { fetchTasksList } = todoStore
-await fetchTasksList()
+// const { fetchTasksList } = todoStore
+// await fetchTasksList()
+
+const tasksList = ref<TaskItem[] | null> (await taskService.getTasks())
+console.log(tasksList.value);
 
 const closeModal = ():void => {
   isOpenCreateTaskModal.value = false
@@ -33,16 +38,16 @@ const openCreateTaskModal = ():void => {
   isOpenCreateTaskModal.value = true
 }
 const deleteTaskItem = (index:number):void => {
-  todoStore.deleteTaskItem(index)
+  // todoStore.deleteTaskItem(index)
 }
 const finishTask = (value:boolean, index:number):void => {
-  todoStore.finishTask(value, index)
+  // todoStore.finishTask(value, index)
 }
 const saveTaskItemName = (value:string, index:number):void => {
-  todoStore.saveTaskItemName(value, index)
+  // todoStore.saveTaskItemName(value, index)
 }
 
-console.log(validateTask({title: null}), '2222')
+// console.log(validateTask({title: null}), '2222')
 
 </script>
 <style>
