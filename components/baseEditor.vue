@@ -9,7 +9,7 @@
   </div>
 </template>
 
-<script setup>
+<script>
 import EditorJs from '@editorjs/editorjs';
 import Checklist from '@editorjs/checklist';
 import Code from '@editorjs/code';
@@ -27,116 +27,15 @@ import Warning from '@editorjs/warning';
 import SimpleTest from '~/services/customDeliver.js'
 import CustomDelimiter from "~/services/customDeliver.js";
 
-const editor = new EditorJs({
-  i18n: {
-    messages: {
-      ui: {
-        // Translations of internal UI components of the editor.js core
-      },
-      toolNames: {
-        // Section for translation Tool Names: both block and inline tools
-      },
-      tools: {
-        // Section for passing translations to the external tools classes
-        // The first-level keys of this object should be equal of keys ot the 'tools' property of EditorConfig
-      },
-      blockTunes: {
-        // Section allows to translate Block Tunes
-      },
+export default {
+  data() {
+    return {
+      editor: null
     }
   },
-  autofocus: true,
-  placeholder: 'Type text or paste a link',
-  tools: {
-    header: {
-      class: Header,
-      inlineToolbar: ['link', 'marker'],
-    },
-    image: {
-      class: ImageTool,
-      inlineToolbar: true,
-      config: {
-        types: 'image/jpeg, image/jpg, image/png, image/gif, video/mp4, video/quicktime',
-        field: 'media',
-        /**
-         * Custom uploader to emulate image uploading without backend
-         * @see https://github.com/editor-js/image#providing-custom-uploading-methods
-         */
-        uploader: {
-          uploadByFile(file) {
-            return new Promise((resolve) => {
-              const reader = new FileReader();
-
-              reader.onload = () => {
-                resolve({
-                  success: 1,
-                  file: {
-                    url: reader.result,
-                  }
-                })
-              };
-              reader.onerror = () => {
-                resolve({
-                  success: 0,
-                })
-              };
-
-              reader.readAsDataURL(file);
-            });
-          },
-          uploadByUrl(url){
-            return new Promise((resolve) => {
-              resolve({
-                success: 1,
-                file: {
-                  url
-                }
-              })
-            })
-          }
-        }
-      },
-    },
-    list: {
-      class: NestedList,
-      inlineToolbar: true
-    },
-    code: {
-      class: Code,
-      shortcut: 'CMD+SHIFT+D',
-      toolbox: {
-        // icon: '<svg>my icon code</svg>',
-        title: 'Блок кода'
-      }
-    },
-    quote: {
-      class: Quote,
-      inlineToolbar: true,
-    },
-    delimiter: {
-      class: CustomDelimiter,
-    },
-    embed: Embed,
-    table: {
-      class: Table,
-      inlineToolbar: true
-    },
-    raw: Raw,
-    inlineCode: {
-      class: InlineCode,
-      shortcut: 'CMD+SHIFT+C'
-    },
-    marker: {
-      class: Marker,
-      shortcut: 'CMD+SHIFT+M'
-    },
-    warning: Warning,
-    checklist: Checklist,
-  },
-})
-
-function save () {
-  editor.save()
+  methods: {
+    save () {
+  this.editor.save()
       .then((savedData) => {
         console.log('1111', savedData)
         // cPreview.show(savedData, document.getElementById("output"));
@@ -144,6 +43,117 @@ function save () {
       .catch((error) => {
         console.error('Saving error', error);
       });
+}
+  },
+  mounted() {
+    this.editor = new EditorJs({
+      i18n: {
+        messages: {
+          ui: {
+            // Translations of internal UI components of the editor.js core
+          },
+          toolNames: {
+            // Section for translation Tool Names: both block and inline tools
+          },
+          tools: {
+            // Section for passing translations to the external tools classes
+            // The first-level keys of this object should be equal of keys ot the 'tools' property of EditorConfig
+          },
+          blockTunes: {
+            // Section allows to translate Block Tunes
+          },
+        }
+      },
+      autofocus: true,
+      placeholder: 'Type text or paste a link',
+      tools: {
+        header: {
+          class: Header,
+          inlineToolbar: ['link', 'marker'],
+        },
+        image: {
+          class: ImageTool,
+          inlineToolbar: true,
+          config: {
+            types: 'image/jpeg, image/jpg, image/png, image/gif, video/mp4, video/quicktime',
+            field: 'media',
+            /**
+             * Custom uploader to emulate image uploading without backend
+             * @see https://github.com/editor-js/image#providing-custom-uploading-methods
+             */
+            uploader: {
+              uploadByFile(file) {
+                return new Promise((resolve) => {
+                  const reader = new FileReader();
+
+                  reader.onload = () => {
+                    resolve({
+                      success: 1,
+                      file: {
+                        url: reader.result,
+                      }
+                    })
+                  };
+                  reader.onerror = () => {
+                    resolve({
+                      success: 0,
+                    })
+                  };
+
+                  reader.readAsDataURL(file);
+                });
+              },
+              uploadByUrl(url){
+                return new Promise((resolve) => {
+                  resolve({
+                    success: 1,
+                    file: {
+                      url
+                    }
+                  })
+                })
+              }
+            }
+          },
+        },
+        list: {
+          class: NestedList,
+          inlineToolbar: true
+        },
+        code: {
+          class: Code,
+          shortcut: 'CMD+SHIFT+D',
+          toolbox: {
+            // icon: '<svg>my icon code</svg>',
+            title: 'Блок кода'
+          }
+        },
+        quote: {
+          class: Quote,
+          inlineToolbar: true,
+        },
+        delimiter: {
+          class: CustomDelimiter,
+        },
+        embed: Embed,
+        table: {
+          class: Table,
+          inlineToolbar: true
+        },
+        raw: Raw,
+        inlineCode: {
+          class: InlineCode,
+          shortcut: 'CMD+SHIFT+C'
+        },
+        marker: {
+          class: Marker,
+          shortcut: 'CMD+SHIFT+M'
+        },
+        warning: Warning,
+        checklist: Checklist,
+      },
+    })
+  }
 }
 </script>
 
