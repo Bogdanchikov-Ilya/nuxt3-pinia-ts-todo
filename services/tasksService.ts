@@ -15,7 +15,7 @@ export function validateTask(data: any): taskErrors {
 export async function getTasks(): Promise<TaskItem[] | null> {
   const {data} = await useMainApi<TaskItem[]>('api/task', {
     headers: {
-      Authorization: `Bearer ${localStorage.getItem('token')}`
+      // Authorization: `Bearer ${localStorage.getItem('token')}`
     }
   });
   console.log(data)

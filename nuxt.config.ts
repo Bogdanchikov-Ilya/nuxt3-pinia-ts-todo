@@ -5,6 +5,7 @@ export default defineNuxtConfig({
             baseURL: process.env.BASE_URL || 'http://localhost:3000/',
         },
     },
+  // plugins: ['~/plugins/editor.js'],
   devtools: { enabled: true },
   modules: ['@pinia/nuxt'],
   css: [
