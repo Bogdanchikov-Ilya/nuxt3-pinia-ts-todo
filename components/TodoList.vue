@@ -27,9 +27,10 @@ let isOpenCreateTaskModal = ref<boolean>(false)
 // const tasksList = computed(() => todoStore.todoList)
 // const { fetchTasksList } = todoStore
 // await fetchTasksList()
-
-const tasksList = ref<TaskItem[] | null> (await taskService.getTasks())
-console.log(tasksList.value);
+let tasksList = ref<TaskItem[] | null>(null)
+onMounted(async () => {
+  tasksList.value = await taskService.getTasks()
+})
 
 const closeModal = ():void => {
   isOpenCreateTaskModal.value = false

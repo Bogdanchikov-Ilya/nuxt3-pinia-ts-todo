@@ -13,13 +13,14 @@ export function validateTask(data: any): taskErrors {
 }
 
 export async function getTasks(): Promise<TaskItem[] | null> {
-  const {data} = await useMainApi<TaskItem[]>('api/task', {
+  console.log('hello x2')
+  const res = await useMainApi<TaskItem[]>('api/task', {
     headers: {
-      // Authorization: `Bearer ${localStorage.getItem('token')}`
+      Authorization: `Bearer ${localStorage.getItem('token')}`
     }
   });
-  console.log(data)
-  return data.value
+  console.log(res);
+  return res
 }
 
 export async function getTaskById(id: number): Promise<TaskItem | null> {
