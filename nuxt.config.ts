@@ -2,7 +2,8 @@
 export default defineNuxtConfig({
     runtimeConfig: {
         public: {
-            baseURL: process.env.BASE_URL || 'http://localhost:3000/',
+            // baseURL: process.env.BASE_URL || 'https://jsonplaceholder.typicode.com/',
+          baseURL: 'http://localhost:3001/'
         },
     },
   // plugins: ['~/plugins/editor.js'],
@@ -11,4 +12,7 @@ export default defineNuxtConfig({
   css: [
       'bootstrap/dist/css/bootstrap.css'
     ],
+  routeRules: {
+    // '/': { ssr: false },
+  }
 })

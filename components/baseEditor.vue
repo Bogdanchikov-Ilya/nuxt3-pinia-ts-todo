@@ -37,7 +37,6 @@ export default {
     save () {
   this.editor.save()
       .then((savedData) => {
-        console.log('1111', savedData)
         // cPreview.show(savedData, document.getElementById("output"));
       })
       .catch((error) => {

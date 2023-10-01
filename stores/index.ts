@@ -7,6 +7,10 @@ export const useCounterStore = defineStore('counter', {
     loginUser: null as LoginUserItemModel | null
   }),
   actions: {
+    getTest() {
+      const {data} = useFetch('https://jsonplaceholder.typicode.com/todos')
+      return data
+    },
     login(data: LoginUserItemModel):void {
       this.loginUser = data
     },

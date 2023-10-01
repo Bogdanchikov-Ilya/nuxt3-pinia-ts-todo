@@ -28,14 +28,15 @@ const email = ref<string>('')
 const password = ref<string>('')
 const showError = ref<boolean>(false)
 const onSubmit = async () => {
-  const { data, pending, error, refresh }  = await authService.login(email.value, password.value)
-  if(error.value && error.value.statusCode === 401) {
+  const res  = await authService.login(email.value, password.value)
+
+  if(!res?.value?.access_token) {
     showError.value = true
     return
   }
-  if(data.value) {
-    localStorage.setItem('token', data.value.access_token)
-    router.push('/')
-  }
+  const token = useCookie('token')
+  token.value = res.value.access_token
+
+  router.push('/')
 }
 </script>

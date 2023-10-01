@@ -7,6 +7,10 @@
   </div>
 </template>
 <script setup lang="ts">
+const counter = ref<number>(0)
+setInterval(() => {
+  counter.value++
+}, 1000)
 import { storeToRefs } from 'pinia'
 // import {useCounterStore} from "~/stores/index.ts";
 // const store = useCounterStore()

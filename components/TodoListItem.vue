@@ -19,7 +19,7 @@ const props = defineProps<{
   id: number
 }>()
 const emit = defineEmits<{
-  (e: 'deleteTaskItem'): void,
+  (e: 'deleteTaskItem', id:number): void,
   (e: 'finishTask', completed:boolean) :void,
   (e: 'saveTaskItemName', name:string): void
 }>()
@@ -29,10 +29,9 @@ const isEdit = ref<boolean>(false)
 const input = ref<object>({})
 
 function deleteTaskItem() {
-  emit('deleteTaskItem')
+  emit('deleteTaskItem', props.id)
 }
 function changeChechbox(event: any) {
-  console.log(typeof event)
   emit('finishTask', event.target.checked)
 }
 async function setEditTaskName() {

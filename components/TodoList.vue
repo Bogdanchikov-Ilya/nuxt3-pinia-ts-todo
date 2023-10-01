@@ -1,13 +1,19 @@
 <template>
   <div class="p-5">
-    <TodoCreateTaskModal v-if="isOpenCreateTaskModal" @closeModal="closeModal"/>
+    {{tasksList}}
+    <TodoCreateTaskModal v-if="isOpenCreateTaskModal"
+                         @closeModal="closeModal"
+                         @updateTasksList="tasksList.refresh"
+    />
+<!--    {{tasksList.data}}-->
+<!--    {{data}}-->
     <ul class="d-flex flex-column gap-3 p-0">
-      <todo-list-item v-for="(item, index) in tasksList"
-      :key="item.id" 
+      <todo-list-item v-for="(item, index) in tasksList.data"
+      :key="item.id"
       :id="item.id"
-      :name="item.title" 
+      :name="item.title"
       :complete="item.completed"
-      @deleteTaskItem="deleteTaskItem(index)"
+      @deleteTaskItem="deleteTaskItem"
       @saveTaskItemName="saveTaskItemName($event, index)"
       @finishTask="finishTask($event, index)" />
   </ul>
@@ -15,22 +21,11 @@
   </div>
 </template>
 <script setup lang="ts">
-// import * as taskService from '@/services/tasksService'
-import { storeToRefs } from 'pinia'
-// import { useTodoStore } from '~/stores/todo.ts'
+import { TaskItem } from "~/models/taskItem.model";
 import * as taskService from '@/services/tasksService'
-import {TaskItem} from "~/models/taskItem.model";
-// const todoStore = useTodoStore()
-// const { getTodoList } = storeToRefs(todoStore)
+
 let isOpenCreateTaskModal = ref<boolean>(false)
-// одно и тоже что и getters
-// const tasksList = computed(() => todoStore.todoList)
-// const { fetchTasksList } = todoStore
-// await fetchTasksList()
-let tasksList = ref<TaskItem[] | null>(null)
-onMounted(async () => {
-  tasksList.value = await taskService.getTasks()
-})
+let tasksList = ref(await taskService.getTasks() as any)
 
 const closeModal = ():void => {
   isOpenCreateTaskModal.value = false
@@ -38,8 +33,9 @@ const closeModal = ():void => {
 const openCreateTaskModal = ():void => {
   isOpenCreateTaskModal.value = true
 }
-const deleteTaskItem = (index:number):void => {
-  // todoStore.deleteTaskItem(index)
+const deleteTaskItem = async (id:number) => {
+  // await taskService.deleteTask(id)
+  // await setTasksList()
 }
 const finishTask = (value:boolean, index:number):void => {
   // todoStore.finishTask(value, index)
@@ -47,9 +43,6 @@ const finishTask = (value:boolean, index:number):void => {
 const saveTaskItemName = (value:string, index:number):void => {
   // todoStore.saveTaskItemName(value, index)
 }
-
-// console.log(validateTask({title: null}), '2222')
-
 </script>
 <style>
 .add-task{

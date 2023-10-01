@@ -1,13 +1,13 @@
-import {useMainApi} from "~/composables/useMainApi";
+import {useMyFetch} from "~/composables/useMainApi";
 export async function login(email: string, password: string) {
   try {
-    const res = await useMainApi('api/auth/login', {
+    const {data} = await useMyFetch('api/auth/login', {
       method: 'POST',
       body: {
         email, password
       }
     })
-    return res
+    return data
   } catch (e: any) {
     return e
   }
