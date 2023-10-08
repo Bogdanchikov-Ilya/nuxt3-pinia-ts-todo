@@ -1,29 +1,21 @@
 <template>
-  <div class="container mt-5">
-    <div class="row d-flex justify-content-center">
-      <div class="col-md-6">
-        <div class="card px-5 py-5" id="form1">
-          <div class="form-data">
-            <div class="forms-inputs mb-4"> <span>Email or username</span> <input autocomplete="off" type="text" v-model="email">
-              <div class="invalid-feedback">A valid email is required!</div>
-            </div>
-            <div class="forms-inputs mb-4"> <span>Password</span> <input autocomplete="off" type="password" v-model="password">
-              <div class="invalid-feedback">Password must be 8 character!</div>
-            </div>
-            <div class="mb-3"> <button v-on:click.stop.prevent="onSubmit" class="btn btn-dark w-100">Login</button> </div>
-          </div>
-          <p class="text-danger" v-if="showError">Неверный логин или пароль</p>
-        </div>
+  <form class="flex justify-center items-center flex-col border w-fit mx-auto py-10 px-10 rounded gap-4 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2" @submit.prevent="onSubmit">
+      <div class="flex flex-col">
+        <label>Email</label>
+        <input type="text" class="border px-1.5 py-1 rounded focus:outline-none" placeholder="Email" v-model="email">
       </div>
+    <div class="flex flex-col">
+      <label>Пароль</label>
+      <input type="password" class="border px-1.5 py-1 rounded focus:outline-none" placeholder="Пароль" v-model="password">
     </div>
-  </div>
+    <p class="text-red-600" v-if="showError">Неверный логин или пароль</p>
+    <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Войти</button>
+  </form>
 </template>
 <script setup lang="ts">
 const router = useRouter();
 import * as authService from '@/services/authService'
-import {awaitExpression} from "@babel/types";
 
-const submitted = ref<boolean>(false)
 const email = ref<string>('')
 const password = ref<string>('')
 const showError = ref<boolean>(false)
@@ -37,6 +29,6 @@ const onSubmit = async () => {
   const token = useCookie('token')
   token.value = res.value.access_token
 
-  router.push('/')
+  await router.push('/')
 }
 </script>

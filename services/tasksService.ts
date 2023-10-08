@@ -16,7 +16,6 @@ export function validateTask(data: any): taskErrors {
 
 export async function getTasks() {
   const token = useCookie('token');
-  console.log(token.value, '2222222')
   try {
     const res = await useMyFetch('api/task', {
       headers: {
@@ -36,30 +35,37 @@ export async function getTasks() {
 //   return data.value
 // }
 //
-// export async function createTask(data) {
-//   const res = await useMainApi<TaskItem>(`api/task`, {
-//     method: 'POST',
-//     body: data,
-//     headers: {
-//       Authorization: `Bearer ${localStorage.getItem('token')}`
-//     }
-//   });
-//   return res
-// }
+export async function createTask(data) {
+  const token = useCookie('token');
+  const res = await useMyFetch<TaskItem>(`api/task`, {
+    method: 'POST',
+    body: data,
+    headers: {
+      Authorization: `Bearer ${token.value}`
+    }
+  });
+  return res
+}
 //
-// export async function updateTask(id: number, payload: any): Promise<TaskItem | null> {
-//   const {data} = await useMainApi<TaskItem>(`api/task/${id}`, {
-//     method: 'PATCH',
-//     body: payload
-//   });
-//   return data.value
-// }
-//
-// export async function deleteTask(id: number) {
-//   return useMainApi<TaskItem>(`api/task/${id}`, {
-//     headers: {
-//       Authorization: `Bearer ${localStorage.getItem('token')}`
-//     },
-//     method: 'DELETE',
-//   });
-// }
+export async function updateTask(id: number, payload: any): Promise<TaskItem | null> {
+  const token = useCookie('token');
+  const {data} = await useMyFetch<TaskItem>(`api/task/${id}`, {
+    method: 'PATCH',
+    headers: {
+      Authorization: `Bearer ${token.value}`
+    },
+    body: payload
+  });
+  return data.value
+}
+
+export async function deleteTask(id: number) {
+  const token = useCookie('token');
+  const res = useMyFetch<TaskItem>(`api/task/${id}`, {
+    headers: {
+      Authorization: `Bearer ${token.value}`
+    },
+    method: 'DELETE',
+  })
+  return res
+}

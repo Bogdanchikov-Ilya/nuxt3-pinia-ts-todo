@@ -1,7 +1,7 @@
 <template>
   <div>
     (Default) Лэйаут на всех страницах
-    <button @click="logout">
+    <button @click="logout" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
       logout
     </button>
     <slot />

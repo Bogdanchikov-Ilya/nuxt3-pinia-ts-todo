@@ -1,23 +1,23 @@
 <template>
-  <div class="modal-background"></div>
-  <div class="modal" role="dialog">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
+  <div class="modal-background w-full absolute bg-black opacity-50"></div>
+  <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 border-amber-500 border z-20 bg-white p-8">
+  <div class="modal-dialog">
+    <div class="modal-content flex flex-col gap-3">
+      <div class="modal-header flex justify-between">
         <h5 class="modal-title">Добавление задачи</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close" @click="closeModal">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-        <div class="form-group">
+        <div class="form-group flex flex-col">
           <label for="exampleInputPassword1">Текст</label>
-          <input type="text" class="form-control my-2" id="exampleInputPassword1" placeholder="Текст" v-model="taskText">
+          <input type="text" class="border px-1.5 py-1 rounded focus:outline-none" id="exampleInputPassword1" placeholder="Текст" v-model="taskText">
         </div>
       </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-primary" @click="createTask">Добавить задачу</button>
-        <button type="button" class="btn btn-secondary" data-dismiss="modal" @click="emit('closeModal')">Закрыть</button>
+      <div class="modal-footer flex gap-2">
+        <button type="button" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" @click="createTask">Добавить задачу</button>
+        <button type="button" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" data-dismiss="modal" @click="emit('closeModal')">Закрыть</button>
       </div>
     </div>
   </div>
@@ -36,9 +36,10 @@ const emit = defineEmits<{
 let taskText = ref<string>('')
 const createTask = async () => {
   const data = {
-    title: taskText.value
+    title: taskText.value,
+    completed: false
   }
-  // await taskService.createTask(data)
+  await taskService.createTask(data)
   emit('updateTasksList')
   closeModal()
 }

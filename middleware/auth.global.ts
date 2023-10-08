@@ -2,7 +2,6 @@ export default defineNuxtRouteMiddleware((to) => {
   const token = useCookie('token'); // get token from cookies
 
   if (token.value) {
-    console.log('estb')
     // check if value exists
   }
 

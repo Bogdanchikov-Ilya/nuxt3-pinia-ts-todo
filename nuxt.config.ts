@@ -1,5 +1,12 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
+  css: ['~/assets/css/main.css'],
+  postcss: {
+    plugins: {
+      tailwindcss: {},
+      autoprefixer: {},
+    },
+  },
     runtimeConfig: {
         public: {
             // baseURL: process.env.BASE_URL || 'https://jsonplaceholder.typicode.com/',
@@ -7,11 +14,7 @@ export default defineNuxtConfig({
         },
     },
   // plugins: ['~/plugins/editor.js'],
-  devtools: { enabled: true },
   modules: ['@pinia/nuxt'],
-  css: [
-      'bootstrap/dist/css/bootstrap.css'
-    ],
   routeRules: {
     // '/': { ssr: false },
   }

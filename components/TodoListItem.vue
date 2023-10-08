@@ -1,13 +1,13 @@
 <template>
-  <li class="border px-2 py-2 rounded d-flex flex-row justify-content-between align-items-center" style="flex: 1">
+  <li class="flex my-3 gap-3" style="flex: 1">
     <input type="checkbox" class="form-check-input" :checked="complete" @change="changeChechbox">
     <input :value="name" class="fw-bold mx-2" style="flex: 1" v-show="isEdit" ref="input">
     <span class="fw-bold mx-2" style="flex: 1" v-show="!isEdit && !complete">{{ name }}</span>
     <del class="fw-bold mx-2" style="flex: 1" v-show="!isEdit && complete">{{ name }}</del>
-    <div class="d-flex gap-2">
-      <button class="btn btn-outline-danger" @click="deleteTaskItem">Удалить</button>
+    <div class="flex gap-4">
+      <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" @click="deleteTaskItem">Удалить</button>
       <button class="btn btn-outline-primary" v-if="isEdit" @click="saveNewTaskName">Сохранить</button>
-      <button class="btn btn-outline-primary" @click="setEditTaskName" v-else>Редактировать</button>
+      <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" @click="setEditTaskName" v-else>Редактировать</button>
     </div>
   </li>
 </template> 
